@@ -1,61 +1,46 @@
-HeyGen Documentation:
+HeyGen Documentation
+Overview
+The JobStatusChecker client library is a Python tool for interacting with the Job Management Server. It allows users to start multiple jobs, track their progress, and handle responses based on their completion status.
 
-Short Description of how to use Client Library:
+Note: Ensure that the port you are using (port 5000 in this example) is not occupied by any other job. If a job is running on the port, terminate it or use a different port number.
 
-
-The JobStatusChecker client library is written in Python to interact with the Job Management Server. It enables users to start multiple new jobs on the server, track the progress of existing jobs, and handle responses based on the completion status. 
-
-Note: Make sure the port you are using (I used port 5000) is not running any sort of job. If there is any job running on the port, kill that job or use a different port number.
-
-
-Step 1:
-
-Installations:
-
+Client Library Usage
+Step 1: Installations
 Install the requests package:
+
 pip install requests
-Step 2:
+Step 2: Running the Client Library
+To run the client side, execute the following command:
 
-Running the Client Library:
-Simply run the following command to run the client side:
 python3 client.py
+Step 3: Creating Jobs
+You can create a job using this curl command:
 
-Step 3:
-	Creating Jobs
-A user can create a job using the following curl command:
 curl -X POST 'http://127.0.0.1:5000/start_job'
- A user will see something like below if a job is created successfully:
+If the job is created successfully, you will see a response like:
+
 {
   "job_id": "1730329958865"
 }
-Step 4:
-	Checking the status of the job:
-The library is designed in such a way that it can handle multiple jobs at the same time. The jobs are stored in a dictionary which is handled on the server side.
+Step 4: Checking Job Status
+The library handles multiple jobs concurrently, storing them in a dictionary on the server side.
 
-To check the status of a job, simply use the following command:
+To check the status of a job, use the following command:
+
 python3 client.py job_id
+If you run python3 client.py without a job ID, the library will create and execute a new job.
 
--  If only python3 client.py is used, the library creates and executes a new job.
+Server Library Usage
+The client side interacts with a Flask-based server that provides endpoints for starting and monitoring asynchronous jobs. Each job has a 10% chance of failure, simulating a realistic process.
 
-
-
-
-
-
-
-
-Short Description of how to use Server Library:	
-
-The client side interacts with the server side. I have utilized flask which provides endpoints for starting and monitoring async jobs. Each job has a 10% chance of failure, simulating a realistic process with potential errors. The server is designed in such a way that it processes the job in the background and provides a simple API for job creation and checking the status.
-
-Requirements:
-
+Requirements
 Python 3 or higher
 Flask Library
+Install Flask with the following commands if not already installed:
 
-Install Flask using the following command if not already installed:
 pip install Flask
 pip install Flask requests
+Running the Server
+To run the server, execute:
 
-Then simply run the server using the following command:
 python3 server.py
